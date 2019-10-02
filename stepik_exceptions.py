@@ -13,30 +13,26 @@ def find_path(graph, start, end, path=[]):
     return None
 
 
+exceptions_hierarchy = {}
+exceptions = []
+
 n = int(input())
-exceptions = {}
-exs = []
 for i in range(n):
     s = input()
     try:
-        a, b = s.split(' : ')
-        anc = b.split()
-        exceptions[a] = anc
+        child, parents = s.split(' : ')
+        parents = parents.split()
+        exceptions_hierarchy[child] = parents
     except ValueError:
-        exceptions[s] = s
+        exceptions_hierarchy[s] = s
 
 m = int(input())
 for i in range(m):
-    a = input()
-    exs.append(a)
+    e = input()
+    exceptions.append(e)
 
-output = []
-for i, e in enumerate(reversed(exs)):
-    for j, ex in enumerate(reversed(exs)):
-        if j > i and find_path(exceptions, e, ex):
-            output.append(e)
+for i, e in enumerate(exceptions):
+    for j, ex in enumerate(exceptions):
+        if j < i and find_path(exceptions_hierarchy, e, ex):
+            print(e)
             break
-
-# костыль для вывода в требуемом
-for e in reversed(output):
-    print(e)
