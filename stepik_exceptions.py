@@ -36,4 +36,3 @@ for i, e in enumerate(exceptions):
         if j < i and find_path(exceptions_hierarchy, e, ex):
             print(e)
             break
-# check
